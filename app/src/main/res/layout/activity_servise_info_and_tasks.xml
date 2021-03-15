@@ -12,11 +12,11 @@
         android:layout_height="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageViewServicePage"
+        app:layout_constraintStart_toEndOf="@+id/ivEditFragment"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textViewServisePageToBrand"
+            android:id="@+id/tvBrandModelSpec_inEditFrag"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginStart="16dp"
@@ -33,7 +33,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
-        android:id="@+id/imageViewServicePage"
+        android:id="@+id/ivEditFragment"
         android:layout_width="182dp"
         android:layout_height="100dp"
         android:contentDescription="addImage"
@@ -53,7 +53,7 @@
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout3"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewServicePage" />
+        app:layout_constraintTop_toBottomOf="@+id/ivEditFragment" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
         <EditText
-            android:id="@+id/editTextSevicePageToShortInfo"
+            android:id="@+id/etServiceInfoEditFragment"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_marginStart="8dp"
@@ -81,7 +81,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/btnEditOnPageService"
+        android:id="@+id/btnEditOnEditFrag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"

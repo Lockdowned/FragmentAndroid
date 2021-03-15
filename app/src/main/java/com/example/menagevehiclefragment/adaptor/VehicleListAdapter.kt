@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.menagevehiclefragment.data.VehicleItem
 import com.example.menagevehiclefragment.databinding.ItemShowVehicleBinding
+import com.example.menagevehiclefragment.interfaces.IFragmentCommunication
 
-class VehicleListAdapter(private var vehicleList: List<VehicleItem>):
+class VehicleListAdapter(private var vehicleList: List<VehicleItem>,
+                         private val navigation: IFragmentCommunication) :
     RecyclerView.Adapter<VehicleListAdapter.VehicleViewHolder>() {
 
     inner class VehicleViewHolder(private val itemVehicleBinding: ItemShowVehicleBinding)
@@ -32,6 +34,9 @@ class VehicleListAdapter(private var vehicleList: List<VehicleItem>):
 
     override fun onBindViewHolder(holder: VehicleViewHolder, position: Int) {
         holder.bind(vehicleList[position])
+        holder.itemView.setOnClickListener {
+            navigation.updateVehicle(position)
+        }
     }
 
 }

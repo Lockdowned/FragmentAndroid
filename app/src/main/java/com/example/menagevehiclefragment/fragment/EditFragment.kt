@@ -1,16 +1,78 @@
 package com.example.menagevehiclefragment.fragment
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.menagevehiclefragment.R
+import androidx.fragment.app.activityViewModels
+import com.example.menagevehiclefragment.`object`.UriToDrawableConverter
+import com.example.menagevehiclefragment.data.VehicleItem
+import com.example.menagevehiclefragment.databinding.FragmentEditBinding
+import com.example.menagevehiclefragment.interfaces.IFragmentCommunication
+import com.example.menagevehiclefragment.viewmodels.VehicleListViewModel
+
 /**
  * A simple [Fragment] subclass.
  * Use the [EditFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class EditFragment : Fragment(R.layout.fragment_edit) {
+class EditFragment(val navigation: IFragmentCommunication) : Fragment() {
+
+    private var imgUri: Uri? = null
+    private val SELECT_IMAGE_CLICK = 2
+
+    private  var _binding: FragmentEditBinding? = null
+    private val binding get() =  _binding!!
+
+    private val vehicleListViewModel: VehicleListViewModel by activityViewModels()
+    private lateinit var selectedItem: VehicleItem
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+//        return super.onCreateView(inflater, container, savedInstanceState)
+//        return inflater.inflate(R.layout.fragment_edit, container, false)
+        _binding = FragmentEditBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var selItemId = vehicleListViewModel.selectedIndex.value!!
+        selectedItem = vehicleListViewModel.getVehicleAtPosition(selItemId)
+
+        binding.run {
+            tvBrandModelSpecInEditFrag.text = selectedItem.brandAndModel.plus(selectedItem.specification)
+            etServiceInfoEditFragment.setText(selectedItem.serviceInfo)
+            ivEditFragment.setImageDrawable(selectedItem.img)
+
+            btnEditOnEditFrag.setOnClickListener {
+                selectedItem.serviceInfo = etServiceInfoEditFragment.text.toString()
+//                vehicleListViewModel.updateVehicleAtPosition(selectedItem,)
+                navigation.listVehicle()
+            }
+
+            ivEditFragment.setOnClickListener {
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.type = "image/*" // это для чего
+                startActivityForResult(intent, SELECT_IMAGE_CLICK)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == SELECT_IMAGE_CLICK){
+            imgUri = data?.data
+            binding.ivEditFragment.setImageURI(imgUri)
+            selectedItem.img = UriToDrawableConverter.uriToDrawable(imgUri.toString(), requireContext())
+        }
+    }
 
 }
