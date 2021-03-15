@@ -12,9 +12,10 @@ import com.example.menagevehiclefragment.fragment.CreateFragment
 import com.example.menagevehiclefragment.fragment.EditFragment
 import com.example.menagevehiclefragment.fragment.ListFragment
 import com.example.menagevehiclefragment.interfaces.IFragmentCommunication
+import com.example.menagevehiclefragment.interfaces.IOnVehicleCreatedListener
 import com.example.menagevehiclefragment.viewmodels.VehicleListViewModel
 
-class MainActivity : AppCompatActivity(), IFragmentCommunication {
+class MainActivity : AppCompatActivity(), IFragmentCommunication, IOnVehicleCreatedListener {
 
     private val vehicleListViewModel: VehicleListViewModel by viewModels()
 
@@ -46,9 +47,7 @@ class MainActivity : AppCompatActivity(), IFragmentCommunication {
             true
         }
 
-
-
-
+        setCurrentFragment(listFragment)
     }
 
     private fun setCurrentFragment(fragment: Fragment){
@@ -76,7 +75,9 @@ class MainActivity : AppCompatActivity(), IFragmentCommunication {
 
     }
 
-    override fun onVehicleCreated(device: VehicleItem?) {
-        TODO("Not yet implemented")
+    override fun onVehicleCreated(vehicle: VehicleItem?) {
+        vehicle?.let {
+            listFragment.onVehicleCreated(it)
+        }
     }
 }

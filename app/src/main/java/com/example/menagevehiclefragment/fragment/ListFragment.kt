@@ -66,4 +66,9 @@ class ListFragment(val navigation: IFragmentCommunication) : Fragment(R.layout.f
         _binding = null
     }
 
+    fun onVehicleCreated(vehicle: VehicleItem){
+        vehicleListViewModel.vehicleList.add(vehicle)
+        vehicleListAdapter?.notifyItemInserted(vehicleListViewModel.vehicleList.size - 1)
+    }
+
 }

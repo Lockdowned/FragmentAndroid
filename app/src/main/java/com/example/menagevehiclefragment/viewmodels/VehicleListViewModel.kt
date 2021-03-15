@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.example.menagevehiclefragment.data.VehicleItem
 
 class VehicleListViewModel: ViewModel() {
+    val vehicleList = mutableListOf<VehicleItem>()
+
     val vehicleListLiveData = MutableLiveData<MutableList<VehicleItem>>(mutableListOf()) // mutableListOf() - что даёт?
 
     var selectedIndex = MutableLiveData<Int>(0)
