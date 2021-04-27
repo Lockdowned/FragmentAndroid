@@ -3,15 +3,20 @@ package com.example.menagevehiclefragment.adaptor
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.menagevehiclefragment.MainActivity
+import com.example.menagevehiclefragment.R
 import com.example.menagevehiclefragment.data.VehicleItem
 import com.example.menagevehiclefragment.databinding.ItemShowVehicleBinding
 import com.example.menagevehiclefragment.interfaces.IFragmentCommunication
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class VehicleListAdapter(private var vehicleList: List<VehicleItem>,
-                         private val navigation: IFragmentCommunication) :
+                         private val context: MainActivity) :
     RecyclerView.Adapter<VehicleListAdapter.VehicleViewHolder>() {
 
-    inner class VehicleViewHolder(private val itemVehicleBinding: ItemShowVehicleBinding)
+    private var selectedItem: ItemShowVehicleBinding? = null
+
+    inner class VehicleViewHolder(val itemVehicleBinding: ItemShowVehicleBinding)
         : RecyclerView.ViewHolder(itemVehicleBinding.root){
 
         fun bind(vehicleItem: VehicleItem){
@@ -35,8 +40,13 @@ class VehicleListAdapter(private var vehicleList: List<VehicleItem>,
     override fun onBindViewHolder(holder: VehicleViewHolder, position: Int) {
         holder.bind(vehicleList[position])
         holder.itemView.setOnClickListener {
-            navigation.updateVehicle(position)
+            selectedItem = holder.itemVehicleBinding
+            var selectedItem = vehicleList[position]
+            context.vehicleViewModel.select(selectedItem)
+            val bottomMneu = context.findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+            bottomMneu.selectedItemId = R.id.miEdit
+            context.setCurrentFragment(context.listFragment)
+            }
         }
-    }
 
 }

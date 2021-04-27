@@ -5,31 +5,38 @@ import androidx.lifecycle.ViewModel
 import com.example.menagevehiclefragment.data.VehicleItem
 
 class VehicleListViewModel: ViewModel() {
-    val vehicleList = mutableListOf<VehicleItem>()
 
-    val vehicleListLiveData = MutableLiveData<MutableList<VehicleItem>>(mutableListOf()) // mutableListOf() - что даёт?
+    var vehicleList = mutableListOf<VehicleItem>()
 
-    var selectedIndex = MutableLiveData<Int>(0)
+    var selectedIndex: Int?
+        get() {
+            return selectedIndex ?: null
+        }
+        set(value) {
+            selectedIndex = value
+        }
 
-    fun selectedItem(index: Int){
-        selectedIndex.value = index
-    }
-
-    fun loadVehicle(vehicle: MutableList<VehicleItem>){
-        vehicleListLiveData.value = vehicle
-    }
-
-    fun addVehicle(vehicle: VehicleItem){
-        vehicleListLiveData.value!!.add(vehicle)
-    }
-
-    fun getVehicleAtPosition(position: Int): VehicleItem{
-        return vehicleListLiveData.value!![position]
-    }
-
-    fun updateVehicleAtPosition(updatedItem: VehicleItem, position: Int){
-        vehicleListLiveData.value!!.set(position, updatedItem)
-    }
-
-
+//    val vehicleListLiveData = MutableLiveData<MutableList<VehicleItem>>(mutableListOf()) // mutableListOf() - что даёт?
+//
+//    var selectedIndex = MutableLiveData<Int>(0)
+//
+//    fun selectedItem(index: Int){
+//        selectedIndex.value = index
+//    }
+//
+//    fun loadVehicle(vehicle: MutableList<VehicleItem>){
+//        vehicleListLiveData.value = vehicle
+//    }
+//
+//    fun addVehicle(vehicle: VehicleItem){
+//        vehicleListLiveData.value!!.add(vehicle)
+//    }
+//
+//    fun getVehicleAtPosition(position: Int): VehicleItem{
+//        return vehicleListLiveData.value!![position]
+//    }
+//
+//    fun updateVehicleAtPosition(updatedItem: VehicleItem, position: Int){
+//        vehicleListLiveData.value!!.set(position, updatedItem)
+//    }
 }

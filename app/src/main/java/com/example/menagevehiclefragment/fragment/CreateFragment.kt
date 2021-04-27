@@ -11,9 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.RadioButton
-import android.widget.Toast
+import android.widget.*
 import androidx.core.graphics.drawable.toDrawable
 import androidx.fragment.app.activityViewModels
 import com.example.menagevehiclefragment.R
@@ -25,7 +23,8 @@ import com.example.menagevehiclefragment.interfaces.IOnVehicleCreatedListener
 import com.example.menagevehiclefragment.viewmodels.VehicleListViewModel
 import java.lang.RuntimeException
 
-class CreateFragment(val navigation: IFragmentCommunication) : Fragment(R.layout.fragment_create) {
+class CreateFragment() :
+        Fragment(R.layout.fragment_create), AdapterView.OnItemSelectedListener {
 
     private var imgUri: Uri? = null
     private val SELECT_IMAGE_CLICK = 2
@@ -106,5 +105,13 @@ class CreateFragment(val navigation: IFragmentCommunication) : Fragment(R.layout
         }
 
 
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        newVehicle?.brandAndModel = parent?.getItemAtPosition(position).toString()
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        newVehicle?.brandAndModel = ""
     }
 }
